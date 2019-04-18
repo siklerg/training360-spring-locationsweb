@@ -34,7 +34,7 @@ public class LocationsController {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		String actualTime = dtf.format(LocalDateTime.now());
 
-		String header = "Locations";
+		String header = "--- Locations Main Page ---";
 
 		Location loc1 = new Location((long) 1, "Pécs", 1, 1);
 		Location loc2 = new Location((long) 2, "Csorna", 2, 2);

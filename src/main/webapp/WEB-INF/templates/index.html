@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Locations WEB</title>
-<link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+
+<head th:replace="fragments/page :: head">
 </head>
+
 <body>
 
-	<h4 th:text="${locationsObjects.header}">Header</h4>
-	<h5 th:text="${locationsObjects.time}">Time</h5>
-
 	<div class="container">
+		<h4 th:text="${locationsObjects.header}">Header</h4>
+		<h5 th:text="${locationsObjects.time}">Time</h5>
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
