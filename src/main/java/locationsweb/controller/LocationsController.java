@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,26 +29,25 @@ public class LocationsController {
 	@RequestMapping("/")
 	public ModelAndView locations() {
 
-		List<Object> locationsObjects = new ArrayList<>();
+		HashMap<String, Object> locationsObjects = new HashMap<String, Object>();
 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		LocalDateTime actualTime = LocalDateTime.now();
+		String actualTime = dtf.format(LocalDateTime.now());
 
 		String header = "Locations";
 
-		Location loc1 = new Location((long) 1,"Pécs", 1, 1);
-		Location loc2 = new Location((long) 2,"Csorna", 2, 2);
-		Location loc3 = new Location((long) 3,"Tomaj", 3, 3);
-		
+		Location loc1 = new Location((long) 1, "Pécs", 1, 1);
+		Location loc2 = new Location((long) 2, "Csorna", 2, 2);
+		Location loc3 = new Location((long) 3, "Tomaj", 3, 3);
+
 		List<Location> locations = new ArrayList<>();
 		locations.add(loc1);
 		locations.add(loc2);
 		locations.add(loc3);
-		
 
-		locationsObjects.add(actualTime);
-		locationsObjects.add(header);
-		locationsObjects.add(locations);
+		locationsObjects.put("time", actualTime);
+		locationsObjects.put("header", header);
+		locationsObjects.put("locations", locations);
 
 		return new ModelAndView("index", "locationsObjects", locationsObjects);
 	}

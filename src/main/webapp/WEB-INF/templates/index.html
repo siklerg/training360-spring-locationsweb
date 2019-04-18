@@ -7,8 +7,8 @@
 </head>
 <body>
 
-	<h1 th:text="${locationsObjects.get(1)}">text1</h1>
-	<h1 th:text="${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')}">text2</h1>
+	<h4 th:text="${locationsObjects.header}">Header</h4>
+	<h5 th:text="${locationsObjects.time}">Time</h5>
 
 	<div class="container">
 		<table class="table table-striped">
@@ -21,7 +21,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<th:block th:each="location : ${locationsObjects.get(2)}">
+				<th:block th:each="location : ${locationsObjects.locations}">
 					<tr>
 						<td th:text="${location.id}"></td>
 						<td th:text="${location.name}"></td>
