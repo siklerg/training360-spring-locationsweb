@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Locations WEB</title>
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
 </head>
 <body>
 
-	<table>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-				<th>LAT</th>
-				<th>LON</th>
-			</tr>
-		</thead>
+	<h1 th:text="${locationsObjects.get(1)}">text1</h1>
+	<h1 th:text="${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')}">text2</h1>
 
-		<tbody>
-
-		</tbody>
-
-	</table>
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>LAT</th>
+					<th>LON</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="location : ${locationsObjects.get(2)}">
+					<tr>
+						<td th:text="${location.id}"></td>
+						<td th:text="${location.name}"></td>
+						<td th:text="${location.lat}"></td>
+						<td th:text="${location.lon}"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>
