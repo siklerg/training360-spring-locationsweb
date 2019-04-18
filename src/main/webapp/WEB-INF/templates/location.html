@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/page :: header">
+</head>
+<body>
+
+	<div class="container">
+		<h3 th:replace="fragments/page :: title"></h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>LAT</th>
+					<th>LON</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${location.id}"></td>
+					<td th:text="${location.name}"></td>
+					<td th:text="${location.lat}"></td>
+					<td th:text="${location.lon}"></td>
+				</tr>
+				</th:block>
+			</tbody>
+		</table>
+		<a th:href="@{/}">Back</a>
+	</div>
+
+
+</body>
+</html>

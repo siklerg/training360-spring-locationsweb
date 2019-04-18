@@ -22,7 +22,7 @@
 			<tbody>
 				<th:block th:each="location : ${locationsObjects.locations}">
 					<tr>
-						<td th:text="${location.id}"></td>
+						<td><a th:href="@{location/{id} (id=${location.id})}" th:text="${location.id}"></a></td>
 						<td th:text="${location.name}"></td>
 						<td th:text="${location.lat}"></td>
 						<td th:text="${location.lon}"></td>

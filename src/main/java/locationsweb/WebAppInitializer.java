@@ -3,13 +3,14 @@ package locationsweb;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import locationsweb.controller.Webconfig;
+import locationsweb.backend.BackendConfig;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
 
 	//backend-hez tartozó konfiguráció
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		return new Class[] {BackendConfig.class};
 	}
 
 	//frontend-hez tartotó konfiguráció
