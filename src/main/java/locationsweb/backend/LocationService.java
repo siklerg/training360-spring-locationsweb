@@ -14,12 +14,12 @@ public class LocationService {
 
 	private AtomicInteger id = new AtomicInteger();
 
-	private List<Location> locations = Collections.synchronizedList(List.of(
+	private List<Location> locations = new ArrayList<Location>(List.of(
 					new Location((long) id.incrementAndGet(), "Pécs", 1, 2), 
 					new Location((long) id.incrementAndGet(), "Csorna", 3, 4), 
 					new Location((long) id.incrementAndGet(), "Tomaj", 5, 6)));
 	
-	public void saveLocation(String name, long lat, long lon) {
+	public void saveLocation(String name, double lat, double lon) {
 		locations.add(new Location((long) id.incrementAndGet(), name, lat, lon));
 	}
 

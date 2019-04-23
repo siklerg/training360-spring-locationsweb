@@ -10,6 +10,8 @@
 		<h4 th:text="${locationsObjects.header}">Header</h4>
 		<h5 th:text="${locationsObjects.time}">Time</h5>
 
+		<div th:if="${message}" th:text="${message}" class="alert alert-success"></div>
+		
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -22,7 +24,8 @@
 			<tbody>
 				<th:block th:each="location : ${locationsObjects.locations}">
 					<tr>
-						<td><a th:href="@{location/{id} (id=${location.id})}" th:text="${location.id}"></a></td>
+						<td><a th:href="@{location/{id} (id=${location.id})}"
+							th:text="${location.id}"></a></td>
 						<td th:text="${location.name}"></td>
 						<td th:text="${location.lat}"></td>
 						<td th:text="${location.lon}"></td>
@@ -30,6 +33,18 @@
 				</th:block>
 			</tbody>
 		</table>
+		
+			<form th:action="@{/}" th:object="${location}" method="post">
+		<div class="form-group">
+			<label for="name-input">New Location name:</label> 
+			<input th:value="${location.name}" th:name="name" id="name-input" class="form-control" /> 
+			<label for="name-input">Coordinates (lat, lon): 49.12, 13.45</label> 
+			<input th:value="${location.name}" th:name="coordinates" id="coordinates-input" class="form-control" />
+		</div>
+		<button type="submit" class="btn btn-primary">Create location</button>
+	</form>
+	
+	
 	</div>
 
 </body>
