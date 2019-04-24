@@ -1,7 +1,6 @@
 package locationsweb.backend;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
