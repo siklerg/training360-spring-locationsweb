@@ -3,12 +3,13 @@
 
 <head th:fragment="header">
 <meta charset="UTF-8">
-<title>L O C A T I O N S</title>
+<title th:text="#{pageTitle}">LOCATIONS</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/resources/css/bootstrap.min.css}" />
 </head>
 
 <body>
+<h3 th:fragment="title" th:text="#{title}">Locations Application v.03</h3>
 </body>
 
 </html>

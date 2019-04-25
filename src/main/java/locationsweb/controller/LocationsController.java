@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +24,11 @@ public class LocationsController {
 
 	private LocationService locationService;
 
-	public LocationsController(LocationService locationService) {
+	private MessageSource messageSource;
+
+	public LocationsController(LocationService locationService, MessageSource messageSource) {
 		this.locationService = locationService;
+		this.messageSource = messageSource;
 	}
 
 	@ModelAttribute
@@ -30,6 +36,7 @@ public class LocationsController {
 		return new Location();
 	}
 
+	//Új location létrehozás űrlap elemei számára
 	@ModelAttribute
 	public LocationForm locationForm() {
 		return new LocationForm();
@@ -46,29 +53,29 @@ public class LocationsController {
 
 		HashMap<String, Object> locationsObjects = new HashMap<String, Object>();
 
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String actualTime = dtf.format(LocalDateTime.now());
-
-		String header = "--- Locations Main Page ---";
 
 		List<Location> locations = locationService.listLocations();
 
 		locationsObjects.put("time", actualTime);
-		locationsObjects.put("header", header);
 		locationsObjects.put("locations", locations);
 
 		return new ModelAndView("index", "locationsObjects", locationsObjects);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String saveNewLocation(@ModelAttribute LocationForm locationForm, RedirectAttributes redirectAttributes) {
+	public String saveNewLocation(@ModelAttribute LocationForm locationForm, RedirectAttributes redirectAttributes, Locale locale) {
 		String coordinates = locationForm.getCoordinates();
 
 		Double lat = Double.parseDouble(coordinates.split(", ")[0]);
 		Double lon = Double.parseDouble(coordinates.split(", ")[1]);
 
 		locationService.saveLocation(locationForm.getName(), lat, lon);
-		redirectAttributes.addFlashAttribute("message", "Location added: " + locationForm.getName());
+		
+		String message = messageSource.getMessage("form.saved", new Object[] {locationForm.getName()}, locale);
+		
+		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/";
 	}
 }
