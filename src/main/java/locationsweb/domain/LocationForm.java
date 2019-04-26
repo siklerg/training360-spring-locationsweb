@@ -1,11 +1,14 @@
 package locationsweb.domain;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class LocationForm {
 	
+	@NotEmpty
 	private String name;
+	@NotEmpty
 	private String coordinates;
 	
 	public LocationForm() {

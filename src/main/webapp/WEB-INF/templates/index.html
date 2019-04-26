@@ -7,14 +7,18 @@
 <body>
 
 	<div class="container">
-	
-		<h3 th:replace="fragments/page :: title"></h3>	
-		<h5 th:text="${locationsObjects.time}">Time</h5>
-		
-		<a href="?lang=hu_HU">Magyar</a> <a href="?lang=en_US">English</a>
 
-		<div th:if="${message}" th:text="${message}" class="alert alert-success"></div>
-		
+		<h3 th:replace="fragments/page :: title"></h3>
+		<h5 th:text="${locationsObjects.time}">Time</h5>
+		<p>
+		<a href="?lang=hu_HU" class="btn btn-success">Magyar</a> <a
+			href="?lang=en_US" class="btn btn-warning">English</a>
+		<p>
+		<div th:if="${message}" th:text="${message}"
+			class="alert alert-success"></div>
+		<div th:if="${messageAlert}" th:text="${messageAlert}"
+			class="alert alert-danger"></div>
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -36,18 +40,21 @@
 				</th:block>
 			</tbody>
 		</table>
-		
-			<form th:action="@{/}" th:object="${location}" method="post">
-		<div class="form-group">
-			<label for="name-input" th:text="#{form.name}">New Location name:</label> 
-			<input th:value="${location.name}" th:name="name" id="name-input" class="form-control" /> 
-			<label for="name-input" th:text="#{form.coordinates}">Coordinates (lat, lon):</label> 
-			<input th:value="${location.name}" th:name="coordinates" id="coordinates-input" class="form-control" />
-		</div>
-		<button type="submit" class="btn btn-primary">Create location</button>
-	</form>
-	
-	
+
+		<form th:action="@{/}" th:object="${locationForm}" method="post">
+			<div class="form-group">
+				<label for="name-input" th:text="#{form.name}">New Location name:</label> 
+				<input th:field="*{name}" id="name-input"class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" /> 
+				<label for="coordinates-input" th:text="#{form.coordinates}">Coordinates (lat, lon):</label> 
+				<input th:field="*{coordinates}" id="coordinates-input" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" />
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+				<div th:if="${#fields.hasErrors('coordinates')}" th:errors="*{coordinates}" class="invalid-feedback"></div>
+			</div>
+			<button type="submit" class="btn btn-primary"
+				th:text="#{button.create}">Create location</button>
+		</form>
+
+
 	</div>
 
 </body>

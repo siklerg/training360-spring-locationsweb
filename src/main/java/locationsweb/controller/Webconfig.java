@@ -59,11 +59,6 @@ public class Webconfig implements WebMvcConfigurer{
 	resolver.setTemplateMode("HTML5");
 	return resolver;
 	}
-
-	@Bean
-	public ClientLoggerHandlerInterceptor clientLoggerHandlerInterceptor() {
-		return new ClientLoggerHandlerInterceptor();
-	}
 	
 	@Bean
 	public MessageSource messageSource() {
@@ -85,11 +80,15 @@ public class Webconfig implements WebMvcConfigurer{
 		return interceptor;
 	}
 	
+	@Bean
+	public ClientLoggerHandlerInterceptor clientLoggerHandlerInterceptor() {
+		return new ClientLoggerHandlerInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(clientLoggerHandlerInterceptor());
+		//registry.addInterceptor(clientLoggerHandlerInterceptor());
 		registry.addInterceptor(localeChangeInterceptor());
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
-	
 }

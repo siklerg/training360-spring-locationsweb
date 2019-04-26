@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +39,7 @@ public class LocationsController {
 		return new Location();
 	}
 
-	//Új location létrehozás űrlap elemei számára
+	// Új location létrehozás űrlap elemei számára
 	@ModelAttribute
 	public LocationForm locationForm() {
 		return new LocationForm();
@@ -65,17 +68,31 @@ public class LocationsController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String saveNewLocation(@ModelAttribute LocationForm locationForm, RedirectAttributes redirectAttributes, Locale locale) {
-		String coordinates = locationForm.getCoordinates();
+	public ModelAndView saveNewLocation(@Valid LocationForm locationForm, RedirectAttributes redirectAttributes, BindingResult bindingResult, Locale locale) {
+		
+		if (bindingResult.hasErrors()) {
+			
+			HashMap<String, Object> locationsObjects = new HashMap<String, Object>();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			String actualTime = dtf.format(LocalDateTime.now());
 
+			List<Location> locations = locationService.listLocations();
+
+			locationsObjects.put("time", actualTime);
+			locationsObjects.put("locations", locations);
+			
+			return new ModelAndView("index", "locationsObject", locationsObjects);
+		}
+		
+		String coordinates = locationForm.getCoordinates();
 		Double lat = Double.parseDouble(coordinates.split(", ")[0]);
 		Double lon = Double.parseDouble(coordinates.split(", ")[1]);
 
 		locationService.saveLocation(locationForm.getName(), lat, lon);
-		
-		String message = messageSource.getMessage("form.saved", new Object[] {locationForm.getName()}, locale);
-		
+
+		String message = messageSource.getMessage("form.saved", new Object[] { locationForm.getName() }, locale);
+
 		redirectAttributes.addFlashAttribute("message", message);
-		return "redirect:/";
+		return new ModelAndView("redirect:/");
 	}
 }
