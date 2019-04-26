@@ -9,7 +9,7 @@
 	<div class="container">
 
 		<h3 th:replace="fragments/page :: title"></h3>
-		<h5 th:text="${locationsObjects.time}">Time</h5>
+		<h5 th:text="${locationsObjects == null ? '' : locationsObjects.time}">Time</h5>
 		<p>
 		<a href="?lang=hu_HU" class="btn btn-success">Magyar</a> <a
 			href="?lang=en_US" class="btn btn-warning">English</a>
@@ -28,7 +28,7 @@
 					<th>LON</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody th:if="${locationsObjects} != null">
 				<th:block th:each="location : ${locationsObjects.locations}">
 					<tr>
 						<td><a th:href="@{location/{id} (id=${location.id})}"
@@ -45,10 +45,12 @@
 			<div class="form-group">
 				<label for="name-input" th:text="#{form.name}">New Location name:</label> 
 				<input th:field="*{name}" id="name-input"class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" /> 
-				<label for="coordinates-input" th:text="#{form.coordinates}">Coordinates (lat, lon):</label> 
-				<input th:field="*{coordinates}" id="coordinates-input" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" />
 				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+				<label for="coordinates-input" th:text="#{form.coordinates}">Coordinates (lat, lon):</label> 
+				<input th:field="*{coordinates}" id="coordinates-input" class="form-control" th:classappend="${#fields.hasErrors('coordinates')} ? 'is-invalid'" />
 				<div th:if="${#fields.hasErrors('coordinates')}" th:errors="*{coordinates}" class="invalid-feedback"></div>
+				<div th:if="${#fields.hasErrors('global')}" th:text="#{message.wrongCoordinates}" class="invalid-feedback"></div>
+				
 			</div>
 			<button type="submit" class="btn btn-primary"
 				th:text="#{button.create}">Create location</button>
