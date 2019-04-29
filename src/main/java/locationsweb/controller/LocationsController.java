@@ -12,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,7 +85,7 @@ public class LocationsController {
 
 		
 		if (bindingResult.hasErrors()) {
-			return new ModelAndView("index", "locationsObject", locationsObjects);
+			return new ModelAndView("index", "locationsObjects", locationsObjects);
 		}
 		
 		Double lat, lon;
@@ -95,9 +96,11 @@ public class LocationsController {
 			lon = Double.parseDouble(coordinates.split(", ")[1]);
 		} catch (Exception e) {
 			System.out.println("Hibás koordináták!");
-			ObjectError objectError = new ObjectError("locationForm", "Wrong coordinates format!");
-			bindingResult.addError(objectError);
-			return new ModelAndView("index", "locationsObject", locationsObjects);
+//			ObjectError objectError = new ObjectError("locationForm", "Wrong coordinates format!");
+//			bindingResult.addError(objectError);
+			
+			bindingResult.addError(new FieldError("locationsObjects", "coordinates", "Wrong coordinates format!"));
+			return new ModelAndView("index", "locationsObjects", locationsObjects);
 		}
 
 		String coordinates = locationForm.getCoordinates();
