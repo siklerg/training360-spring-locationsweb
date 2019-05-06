@@ -36,4 +36,9 @@ public class LocationService {
 		locationToModify.setLon(location.getLon());
 	}
 
+	public void deleteLocation(long id) {
+		locationRepository.deleteById(id);
+		
+	}
+
 }

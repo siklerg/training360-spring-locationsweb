@@ -6,6 +6,9 @@
 
 	<div class="container">
 		<h3 th:replace="fragments/page :: title"></h3>
+		
+		
+		<form th:action="@{/location/{id} (id=${location.id})}" th:object=${location} method="post">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -17,15 +20,31 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${location.id}"></td>
-					<td th:text="${location.name}"></td>
-					<td th:text="${location.lat}"></td>
-					<td th:text="${location.lon}"></td>
+					<td th:text="${location.id}"> 				
+					<td>
+					<input th:label="${location.name}" th:field="*{name}" class="form-control" id="name" />
+					</td>
+					<td>
+					<input th:label="${location.lat}" th:field="*{lat}" class="form-control" id="lat" />
+					</td>
+					<td>
+					<input th:label="${location.lon}" th:field="*{lon}" class="form-control" id="lon" />
+					</td>
 				</tr>
 				</th:block>
 			</tbody>
 		</table>
-		<a th:href="@{/}" class="btn btn-primary">Back</a>
+			<button th:text="#{button.modify}" type="submit" class="btn btn-warning">Modify employee</button>
+					<p></p>
+					<a th:href="@{delete/{id}(id=${location.id})}" th:text="#{delete}" class="btn btn-danger btn-sm">
+					<span class="glyphicon glyphicon-remove"></span>
+        			</a>
+		</form>
+		<p></p>
+
+		<p>
+		<a th:href="@{/}" th:text="#{button.back}" class="btn btn-primary">Back</a>
+		</p>
 	</div>
 
 
