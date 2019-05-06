@@ -1,12 +1,15 @@
 package locationsweb.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class LocationForm {
 	
-	@NotEmpty
+	@Id
+	private long id;
+		@NotEmpty
 	private String name;
 	@NotEmpty
 	private String coordinates;
@@ -33,6 +36,14 @@ public class LocationForm {
 
 	public void setCoordinates(String coordinates) {
 		this.coordinates = coordinates;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

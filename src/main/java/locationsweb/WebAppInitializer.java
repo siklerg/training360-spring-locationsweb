@@ -5,23 +5,23 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import locationsweb.controller.Webconfig;
 import locationsweb.backend.BackendConfig;
 
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	//backend-hez tartozó konfiguráció
+	// backend-hez tartozó konfiguráció
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {BackendConfig.class};
+		return new Class[] { BackendConfig.class };
 	}
 
-	//frontend-hez tartotó konfiguráció
+	// frontend-hez tartotó konfiguráció
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] {Webconfig.class};
+		return new Class[] { Webconfig.class };
 	}
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] {"/"};
+		return new String[] { "/" };
 	}
 
 }
